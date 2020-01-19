@@ -17,7 +17,7 @@ clock = pygame.time.Clock()
 
 def game_loop():
     snake = Snake(background, 100, 20)
-    fruit = Fruit(background, randint(10, Dimensions.WIDTH - 10), randint(10, Dimensions.HEIGHT - 10))
+    fruit = Fruit(background, randint(20, Dimensions.WIDTH - 20), randint(20, Dimensions.HEIGHT - 20))
     x = Dimensions.WIDTH * 0.45
     y = Dimensions.HEIGHT * 0.8
     speed = 2
@@ -89,7 +89,7 @@ def game_loop():
         background.fill(Colors.BLACK)
         snake = Snake(background, x, y)
         if Dimensions.d(snake.head_x, snake.head_y, fruit.x, fruit.y) < 4:
-            fruit = Fruit(background, randint(0, Dimensions.WIDTH), randint(0, Dimensions.HEIGHT))
+            fruit = Fruit(background, randint(20, Dimensions.WIDTH-20), randint(20, Dimensions.HEIGHT-20))
             score += 1
             if score // 5 > 0 and score % 5 == 0:
                 speed = 1.2 * speed
