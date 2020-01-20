@@ -1,3 +1,3 @@
 # Snake
 
-Game of Snake in Python 3 using pygame library.
+Game of Snake written in Python 3 with the help of pygame library.
