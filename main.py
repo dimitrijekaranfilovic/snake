@@ -23,8 +23,8 @@ def game_loop():
     clock = pygame.time.Clock()
     # snake = Snake(background, 100, Dimensions.TILE_SIZE)
     # fruit = Fruit(background, randint(20, Dimensions.WIDTH - 20), randint(20, Dimensions.HEIGHT - 20))
-    x = Dimensions.WIDTH * 0.45
-    y = Dimensions.HEIGHT * 0.8
+    # x = Dimensions.WIDTH * 0.45
+    # y = Dimensions.HEIGHT * 0.8
     speed = 2
     fruit = pygame.Surface((Dimensions.TILE_SIZE, Dimensions.TILE_SIZE))
     fruit.fill(Colors.GREEN)
@@ -33,8 +33,8 @@ def game_loop():
     x_change = 0
     y_change = 0
 
-    xs = [200]
-    ys = [20]
+    xs = [Dimensions.WIDTH * 0.45]
+    ys = [Dimensions.HEIGHT * 0.8]
     tile = pygame.Surface((Dimensions.TILE_SIZE, Dimensions.TILE_SIZE))
     tile.fill(Colors.WHITE)
 
@@ -117,21 +117,21 @@ def game_loop():
             score_text = font.render('Score: ' + str(score), 2, Colors.YELLOW)
             if score // 5 > 0 and score % 5 == 0:
                 speed = 1.2 * speed
-                # enemies.append(
-                #     Enemy(background, randint(10, Dimensions.WIDTH - 10), randint(10, Dimensions.HEIGHT - 10),
-                #           randint(0, 255), randint(0, 255), randint(0, 255)))
+                enemies.append(
+                     Enemy(background, randint(10, Dimensions.WIDTH - 10), randint(10, Dimensions.HEIGHT - 10),
+                           randint(0, 255), randint(0, 255), randint(0, 255)))
         # else:
         # fruit = Fruit(background, fruit.x, fruit.y)
-        # i = 0
-        # while i < len(enemies):
-        #     x_c = randint(-1, 1) * int(speed)
-        #     y_c = randint(-1, 1) * int(speed)
-        #     if not (enemies[i].x + x_c < 0 or enemies[i].x + x_c > Dimensions.WIDTH or enemies[i].y + y_c < 0 or
-        #             enemies[i].y + y_c > Dimensions.HEIGHT):
-        #         enemies[i] = Enemy(background, enemies[i].x + x_c, enemies[i].y + y_c, enemies[i].r, enemies[i].g,
-        #                            enemies[i].b)
-        #         detect_collision(enemies, x, y, background, score)
-        #         i += 1
+        j = 0
+        while j < len(enemies):
+            x_c = randint(-1, 1) * int(speed)
+            y_c = randint(-1, 1) * int(speed)
+            if not (enemies[j].x + x_c < 0 or enemies[j].x + x_c > Dimensions.WIDTH or enemies[j].y + y_c < 0 or
+                    enemies[j].y + y_c > Dimensions.HEIGHT):
+                enemies[j] = Enemy(background, enemies[j].x + x_c, enemies[j].y + y_c, enemies[j].r, enemies[j].g,
+                                   enemies[j].b)
+                detect_collision(enemies, xs[0], ys[0], background, score)
+                j += 1
         i = len(xs) - 1
         while i >= 1:
             xs[i] = xs[i - 1]
@@ -144,30 +144,30 @@ def game_loop():
         clock.tick(75)
 
 
-# def detect_collision(enemies, current_x, current_y, background, score):
-#     for i in range(len(enemies)):
-#         if Dimensions.circle_square_collision(current_x, current_y, enemies[i].x, enemies[i].y):
-#             message_display(background, "GAME OVER!".format(score), 2, True)
-#
-#
-# def text_objects(text, font):
-#     text_surface = font.render(text, True, Colors.WHITE)
-#     return text_surface, text_surface.get_rect()
-#
-#
-# def message_display(game_display, text, sleep_time, game_over):
-#     large_text = pygame.font.Font("freesansbold.ttf", 70)
-#     text_surf, text_rect = text_objects(text, large_text)
-#     text_rect.center = (Dimensions.WIDTH / 2, Dimensions.HEIGHT / 2)
-#     game_display.blit(text_surf, text_rect)
-#
-#     pygame.display.update()
-#
-#     time.sleep(sleep_time)
-#     if game_over:
-#         game_loop()
-#
-#
+def detect_collision(enemies, current_x, current_y, background, score):
+    for i in range(len(enemies)):
+        if Dimensions.circle_square_collision(current_x, current_y, enemies[i].x, enemies[i].y):
+            message_display(background, "GAME OVER!".format(score), 2, True)
+
+
+def text_objects(text, font):
+    text_surface = font.render(text, True, Colors.WHITE)
+    return text_surface, text_surface.get_rect()
+
+
+def message_display(game_display, text, sleep_time, game_over):
+    large_text = pygame.font.Font("freesansbold.ttf", 70)
+    text_surf, text_rect = text_objects(text, large_text)
+    text_rect.center = (Dimensions.WIDTH / 2, Dimensions.HEIGHT / 2)
+    game_display.blit(text_surf, text_rect)
+
+    pygame.display.update()
+
+    time.sleep(sleep_time)
+    if game_over:
+        game_loop()
+
+
 # def find_shortest_path(current_x, current_y, goal_x, goal_y, speed):
 #     axes = [(-speed, speed), (-speed, -speed), (speed, speed), (speed, -speed)]
 #     dmin = inf
