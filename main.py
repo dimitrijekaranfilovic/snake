@@ -112,7 +112,7 @@ def game_loop():
                     enemies[j].y + y_c > Dimensions.HEIGHT):
                 enemies[j] = Enemy(background, enemies[j].x + x_c, enemies[j].y + y_c, enemies[j].r, enemies[j].g,
                                    enemies[j].b)
-                detect_collision(enemies, xs[0], ys[0], background, score)
+                detect_collision(enemies, xs[0], ys[0], background)
                 j += 1
         i = len(xs) - 1
         while i >= 1:
@@ -123,7 +123,7 @@ def game_loop():
             background.blit(tile, (xs[i], ys[i]))
 
         if len(xs) > 43:
-            for k in range(len(xs) - 1, 42,-1):
+            for k in range(len(xs) - 1, 42, -1):
                 if Dimensions.square_square_collision_detection(xs[0], ys[0], xs[k], ys[k]):
                     message_display(background, "GAME OVER!", 2, True)
 
@@ -132,7 +132,7 @@ def game_loop():
         clock.tick(75)
 
 
-def detect_collision(enemies, current_x, current_y, background, score):
+def detect_collision(enemies, current_x, current_y, background):
     for i in range(len(enemies)):
         if Dimensions.circle_square_collision(current_x, current_y, enemies[i].x, enemies[i].y):
             message_display(background, "GAME OVER!", 2, True)
