@@ -98,7 +98,7 @@ def game_loop():
 
             score_text = font.render('Score: ' + str(score), 2, Colors.YELLOW)
             if score // 5 > 0 and score % 5 == 0:
-                # speed = 1.2 * speed
+                speed = 1.2 * speed
                 pass
                 # enemies.append(
                 #     Enemy(background, randint(10, Dimensions.WIDTH - 10), randint(10, Dimensions.HEIGHT - 10),
