@@ -8,14 +8,12 @@ from Snake import Enemy
 from math import inf, floor, sqrt
 import time
 
-pygame.init()
-background = pygame.display.set_mode((Dimensions.WIDTH, Dimensions.HEIGHT))
-pygame.display.set_caption("Snake")
-
-clock = pygame.time.Clock()
-
 
 def game_loop():
+    pygame.init()
+    background = pygame.display.set_mode((Dimensions.WIDTH, Dimensions.HEIGHT))
+    pygame.display.set_caption("Snake")
+    clock = pygame.time.Clock()
     snake = Snake(background, 100, Dimensions.TILE_SIZE)
     fruit = Fruit(background, randint(20, Dimensions.WIDTH - 20), randint(20, Dimensions.HEIGHT - 20))
     x = Dimensions.WIDTH * 0.45
@@ -44,41 +42,37 @@ def game_loop():
                 pygame.quit()
                 quit()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    if can_left:
-                        x_change = -1 * speed
-                        y_change = 0
-                        can_left = False
-                        can_right = False
-                        can_up = True
-                        can_down = True
+                if event.key == pygame.K_LEFT and can_left:
+                    x_change = -1 * speed
+                    y_change = 0
+                    can_left = False
+                    can_right = False
+                    can_up = True
+                    can_down = True
 
-                if event.key == pygame.K_RIGHT:
-                    if can_right:
-                        x_change = speed
-                        y_change = 0
-                        can_left = False
-                        can_right = False
-                        can_up = True
-                        can_down = True
+                if event.key == pygame.K_RIGHT and can_right:
+                    x_change = speed
+                    y_change = 0
+                    can_left = False
+                    can_right = False
+                    can_up = True
+                    can_down = True
 
-                if event.key == pygame.K_DOWN:
-                    if can_down:
-                        y_change = speed
-                        x_change = 0
-                        can_down = False
-                        can_up = False
-                        can_right = True
-                        can_left = True
+                if event.key == pygame.K_DOWN and can_down:
+                    y_change = speed
+                    x_change = 0
+                    can_down = False
+                    can_up = False
+                    can_right = True
+                    can_left = True
 
-                if event.key == pygame.K_UP:
-                    if can_up:
-                        y_change = -1 * speed
-                        x_change = 0
-                        can_up = False
-                        can_down = False
-                        can_left = True
-                        can_right = True
+                if event.key == pygame.K_UP and can_up:
+                    y_change = -1 * speed
+                    x_change = 0
+                    can_up = False
+                    can_down = False
+                    can_left = True
+                    can_right = True
 
         x += x_change
         y += y_change
@@ -122,7 +116,6 @@ def game_loop():
 
 def detect_collision(enemies, current_x, current_y, background, score):
     for i in range(len(enemies)):
-        # if Dimensions.(enemies[i].x, enemies[i].y, current_x, current_y) < 4:
         if Dimensions.circle_square_collision(current_x, current_y, enemies[i].x, enemies[i].y):
             message_display(background, "GAME OVER!".format(score), 2, True)
 
