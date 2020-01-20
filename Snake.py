@@ -41,6 +41,12 @@ class Dimensions:
     def point_distance(x0, y0, x1, y1):
         return math.sqrt((x1 - x0) ** 2 + (y1 - y0) ** 2)
 
+    @staticmethod
+    def square_square_collision_detection(x1, y1, x2, y2):
+        if x1 + Dimensions.TILE_SIZE > x2 and x2 + Dimensions.TILE_SIZE > x1 and y1 + Dimensions.TILE_SIZE > y2 and y2 + Dimensions.TILE_SIZE > y1:
+            return True
+        return False
+
 
 class Colors:
     RED = (239, 18, 18)

@@ -89,7 +89,7 @@ def game_loop():
 
         background.fill(Colors.BLACK)
         background.blit(score_text, [score_x, 20])
-        if Dimensions.d(xs[0], ys[0], fruit_x, fruit_y) < 4:
+        if Dimensions.square_square_collision_detection(xs[0], ys[0], fruit_x, fruit_y):
             score += 1
             fruit_x = randint(20, Dimensions.WIDTH - 20)
             fruit_y = randint(20, Dimensions.HEIGHT - 20)
@@ -98,10 +98,11 @@ def game_loop():
 
             score_text = font.render('Score: ' + str(score), 2, Colors.YELLOW)
             if score // 5 > 0 and score % 5 == 0:
-                speed = 1.2 * speed
-                enemies.append(
-                    Enemy(background, randint(10, Dimensions.WIDTH - 10), randint(10, Dimensions.HEIGHT - 10),
-                          randint(0, 255), randint(0, 255), randint(0, 255)))
+                # speed = 1.2 * speed
+                pass
+                # enemies.append(
+                #     Enemy(background, randint(10, Dimensions.WIDTH - 10), randint(10, Dimensions.HEIGHT - 10),
+                #           randint(0, 255), randint(0, 255), randint(0, 255)))
 
         j = 0
         while j < len(enemies):
@@ -120,6 +121,11 @@ def game_loop():
             i -= 1
         for i in range(0, len(xs)):
             background.blit(tile, (xs[i], ys[i]))
+
+        if len(xs) > 43:
+            for k in range(len(xs) - 1, 42,-1):
+                if Dimensions.square_square_collision_detection(xs[0], ys[0], xs[k], ys[k]):
+                    message_display(background, "GAME OVER!", 2, True)
 
         background.blit(fruit, (fruit_x, fruit_y))
         pygame.display.update()
