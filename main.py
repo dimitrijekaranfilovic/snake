@@ -1,19 +1,9 @@
 import pygame
-from random import randint, choice
-from Snake import Snake
-from Snake import Fruit
+from random import randint
 from Snake import Colors
 from Snake import Dimensions
 from Snake import Enemy
-from math import inf, floor, sqrt
 import time
-
-
-def collide(x1, x2, y1, y2, w1=Dimensions.TILE_SIZE, w2=Dimensions.TILE_SIZE, h1=Dimensions.TILE_SIZE, h2=Dimensions.TILE_SIZE):
-    if x1 + w1 > x2 and x1 < x2 + w2 and y1 + h1 > y2 and y1 < y2 + h2:
-        return True
-    else:
-        return False
 
 
 def game_loop():
@@ -21,10 +11,6 @@ def game_loop():
     background = pygame.display.set_mode((Dimensions.WIDTH, Dimensions.HEIGHT))
     pygame.display.set_caption("Snake")
     clock = pygame.time.Clock()
-    # snake = Snake(background, 100, Dimensions.TILE_SIZE)
-    # fruit = Fruit(background, randint(20, Dimensions.WIDTH - 20), randint(20, Dimensions.HEIGHT - 20))
-    # x = Dimensions.WIDTH * 0.45
-    # y = Dimensions.HEIGHT * 0.8
     speed = 2
     fruit = pygame.Surface((Dimensions.TILE_SIZE, Dimensions.TILE_SIZE))
     fruit.fill(Colors.GREEN)
@@ -102,12 +88,8 @@ def game_loop():
             ys[0] = 0
 
         background.fill(Colors.BLACK)
-        # snake = Snake(background, x, y)
         background.blit(score_text, [score_x, 20])
-        # if Dimensions.d(snake.head_x, snake.head_y, fruit.x, fruit.y) < 4:
         if Dimensions.d(xs[0], ys[0], fruit_x, fruit_y) < 4:
-        #if collide(xs[0], ys[0], fruit_x, fruit_y):#Dimensions.d(xs[0], ys[0], fruit_x, fruit_y):
-            # fruit = Fruit(background, randint(20, Dimensions.WIDTH - 20), randint(20, Dimensions.HEIGHT - 20))
             score += 1
             fruit_x = randint(20, Dimensions.WIDTH - 20)
             fruit_y = randint(20, Dimensions.HEIGHT - 20)
@@ -118,10 +100,9 @@ def game_loop():
             if score // 5 > 0 and score % 5 == 0:
                 speed = 1.2 * speed
                 enemies.append(
-                     Enemy(background, randint(10, Dimensions.WIDTH - 10), randint(10, Dimensions.HEIGHT - 10),
-                           randint(0, 255), randint(0, 255), randint(0, 255)))
-        # else:
-        # fruit = Fruit(background, fruit.x, fruit.y)
+                    Enemy(background, randint(10, Dimensions.WIDTH - 10), randint(10, Dimensions.HEIGHT - 10),
+                          randint(0, 255), randint(0, 255), randint(0, 255)))
+
         j = 0
         while j < len(enemies):
             x_c = randint(-1, 1) * int(speed)
@@ -139,6 +120,7 @@ def game_loop():
             i -= 1
         for i in range(0, len(xs)):
             background.blit(tile, (xs[i], ys[i]))
+
         background.blit(fruit, (fruit_x, fruit_y))
         pygame.display.update()
         clock.tick(75)
@@ -147,7 +129,7 @@ def game_loop():
 def detect_collision(enemies, current_x, current_y, background, score):
     for i in range(len(enemies)):
         if Dimensions.circle_square_collision(current_x, current_y, enemies[i].x, enemies[i].y):
-            message_display(background, "GAME OVER!".format(score), 2, True)
+            message_display(background, "GAME OVER!", 2, True)
 
 
 def text_objects(text, font):
@@ -166,22 +148,6 @@ def message_display(game_display, text, sleep_time, game_over):
     time.sleep(sleep_time)
     if game_over:
         game_loop()
-
-
-# def find_shortest_path(current_x, current_y, goal_x, goal_y, speed):
-#     axes = [(-speed, speed), (-speed, -speed), (speed, speed), (speed, -speed)]
-#     dmin = inf
-#     x_final = 0
-#     y_final = 0
-#     for i in range(len(axes)):
-#         x = axes[i][0] + current_x
-#         y = axes[i][1] + current_y
-#         d = sqrt((x - goal_x) ** 2 + (y - goal_y) ** 2)
-#         if d < dmin:
-#             dmin = d
-#             x_final = x
-#             y_final = y
-#     return floor(x_final), floor(y_final)
 
 
 if __name__ == '__main__':
