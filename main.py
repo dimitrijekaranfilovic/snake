@@ -140,13 +140,13 @@ def message_display(game_display, text, sleep_time, game_over):
 
 
 def find_shortest_path(current_x, current_y, goal_x, goal_y, speed):
-    smjerovi = [(-speed, speed), (-speed, -speed), (speed, speed), (speed, -speed)]
+    axes = [(-speed, speed), (-speed, -speed), (speed, speed), (speed, -speed)]
     dmin = inf
     x_final = 0
     y_final = 0
-    for i in range(len(smjerovi)):
-        x = smjerovi[i][0] + current_x
-        y = smjerovi[i][1] + current_y
+    for i in range(len(axes)):
+        x = axes[i][0] + current_x
+        y = axes[i][1] + current_y
         d = sqrt((x - goal_x) ** 2 + (y - goal_y) ** 2)
         if d < dmin:
             dmin = d

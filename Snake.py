@@ -18,7 +18,6 @@ class Dimensions:
 
     @staticmethod
     def circle_square_collision(square_x, square_y, circle_x, circle_y):
-        # d = math.sqrt((square_x - circle_x) ** 2 + (square_y - circle_y) ** 2)
         point1 = (square_x, square_y)
         point2 = (square_x + Dimensions.WIDTH, square_y)
         point3 = (square_x, square_y + Dimensions.HEIGHT)
@@ -53,13 +52,17 @@ class Colors:
 
 
 class Snake:
-    def __init__(self, surface, head_x, head_y):
+    def __init__(self, surface, head_x, head_y, tail_size=0):
         self.head_x = head_x
         self.head_y = head_y
-        self.tail = 0
+        self.tail_size = tail_size
         self.surface = surface
         pygame.draw.rect(self.surface, Colors.WHITE,
                          (self.head_x, self.head_y, Dimensions.TILE_SIZE, Dimensions.TILE_SIZE))
+        for i in range(self.tail_size):
+            pygame.draw.rect(self.surface, Colors.WHITE,
+                             (self.head_x - i * Dimensions.TILE_SIZE, self.head_y, Dimensions.TILE_SIZE, Dimensions.TILE_SIZE))
+
 
 
 class Fruit:
