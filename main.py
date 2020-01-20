@@ -6,6 +6,7 @@ from Snake import Colors
 from Snake import Dimensions
 from Snake import Enemy
 from math import inf, floor, sqrt
+import time
 
 Out = False
 pygame.init()
@@ -89,7 +90,7 @@ def game_loop():
         background.fill(Colors.BLACK)
         snake = Snake(background, x, y)
         if Dimensions.d(snake.head_x, snake.head_y, fruit.x, fruit.y) < 4:
-            fruit = Fruit(background, randint(20, Dimensions.WIDTH-20), randint(20, Dimensions.HEIGHT-20))
+            fruit = Fruit(background, randint(20, Dimensions.WIDTH - 20), randint(20, Dimensions.HEIGHT - 20))
             score += 1
             if score // 5 > 0 and score % 5 == 0:
                 speed = 1.2 * speed
@@ -98,33 +99,54 @@ def game_loop():
                           randint(0, 255), randint(0, 255), randint(0, 255)))
         else:
             fruit = Fruit(background, fruit.x, fruit.y)
-        #for i in range(len(enemies)):
         i = 0
         while i < len(enemies):
-            #x_final, y_final = find_shortest_path(enemies[i].x, enemies[i].y, x, y, speed*0.45)
-            x_c = randint(-1,1) * int(speed)
+            x_c = randint(-1, 1) * int(speed)
             y_c = randint(-1, 1) * int(speed)
-            #enemies[i] = Enemy(background, x_final, y_final, enemies[i].r, enemies[i].g, enemies[i].b)
-            #enemies[i] = Enemy(background, enemies[i].x + x_c, enemies[i].y + y_c, enemies[i].r, enemies[i].g, enemies[i].b)
-            if not (enemies[i].x + x_c < 0 or enemies[i].x + x_c > Dimensions.WIDTH or enemies[i].y + y_c < 0 or enemies[i].y + y_c > Dimensions.HEIGHT):
+            if not (enemies[i].x + x_c < 0 or enemies[i].x + x_c > Dimensions.WIDTH or enemies[i].y + y_c < 0 or
+                    enemies[i].y + y_c > Dimensions.HEIGHT):
                 enemies[i] = Enemy(background, enemies[i].x + x_c, enemies[i].y + y_c, enemies[i].r, enemies[i].g,
                                    enemies[i].b)
+                detect_collision(enemies, x, y, background, score)
                 i += 1
 
         pygame.display.update()
         clock.tick(75)
 
 
+def detect_collision(enemies, current_x, current_y, background, score):
+    for i in range(len(enemies)):
+        # if Dimensions.(enemies[i].x, enemies[i].y, current_x, current_y) < 4:
+        if Dimensions.circle_square_collision(current_x, current_y, enemies[i].x, enemies[i].y):
+            message_display(background, "GAME OVER!".format(score), 2, True)
+
+
+def text_objects(text, font):
+    text_surface = font.render(text, True, Colors.WHITE)
+    return text_surface, text_surface.get_rect()
+
+
+def message_display(game_display, text, sleep_time, game_over):
+    large_text = pygame.font.Font("freesansbold.ttf", 70)
+    text_surf, text_rect = text_objects(text, large_text)
+    text_rect.center = (Dimensions.WIDTH / 2, Dimensions.HEIGHT / 2)
+    game_display.blit(text_surf, text_rect)
+
+    pygame.display.update()
+
+    time.sleep(sleep_time)
+    if game_over:
+        game_loop()
+
+
 def find_shortest_path(current_x, current_y, goal_x, goal_y, speed):
     smjerovi = [(-speed, speed), (-speed, -speed), (speed, speed), (speed, -speed)]
-    #lista = []
     dmin = inf
     x_final = 0
     y_final = 0
     for i in range(len(smjerovi)):
         x = smjerovi[i][0] + current_x
         y = smjerovi[i][1] + current_y
-        #lista.append((floor(x), floor(y)))
         d = sqrt((x - goal_x) ** 2 + (y - goal_y) ** 2)
         if d < dmin:
             dmin = d
