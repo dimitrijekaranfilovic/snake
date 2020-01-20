@@ -9,14 +9,6 @@ class Dimensions:
     ENEMY_RADIUS = 12
 
     @staticmethod
-    def d(x0, y0, x1, y1):
-        center0_x = x0 / 2
-        center0_y = y0 / 2
-        center1_x = x1 / 2
-        center1_y = y1 / 2
-        return math.floor(math.sqrt((center0_x - center1_x) ** 2 + (center0_y - center1_y) ** 2))
-
-    @staticmethod
     def circle_square_collision(square_x, square_y, circle_x, circle_y):
         point1 = (square_x, square_y)
         point2 = (square_x + Dimensions.WIDTH, square_y)
