@@ -51,28 +51,6 @@ class Colors:
     GREEN = (30, 181, 25)
 
 
-class Snake:
-    def __init__(self, surface, head_x, head_y, tail_size=0):
-        self.head_x = head_x
-        self.head_y = head_y
-        self.tail_size = tail_size
-        self.surface = surface
-        pygame.draw.rect(self.surface, Colors.WHITE,
-                         (self.head_x, self.head_y, Dimensions.TILE_SIZE, Dimensions.TILE_SIZE))
-        for i in range(self.tail_size):
-            pygame.draw.rect(self.surface, Colors.WHITE,
-                             (self.head_x - i * Dimensions.TILE_SIZE, self.head_y, Dimensions.TILE_SIZE,
-                              Dimensions.TILE_SIZE))
-
-
-class Fruit:
-    def __init__(self, surface, x, y):
-        self.x = x
-        self.y = y
-        self.surface = surface
-        pygame.draw.rect(self.surface, Colors.GREEN, (self.x, self.y, Dimensions.TILE_SIZE, Dimensions.TILE_SIZE))
-
-
 class Enemy:
     def __init__(self, surface, x, y, r, g, b):
         self.x = x
