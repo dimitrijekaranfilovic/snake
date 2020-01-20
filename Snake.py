@@ -61,8 +61,8 @@ class Snake:
                          (self.head_x, self.head_y, Dimensions.TILE_SIZE, Dimensions.TILE_SIZE))
         for i in range(self.tail_size):
             pygame.draw.rect(self.surface, Colors.WHITE,
-                             (self.head_x - i * Dimensions.TILE_SIZE, self.head_y, Dimensions.TILE_SIZE, Dimensions.TILE_SIZE))
-
+                             (self.head_x - i * Dimensions.TILE_SIZE, self.head_y, Dimensions.TILE_SIZE,
+                              Dimensions.TILE_SIZE))
 
 
 class Fruit:
