@@ -1,3 +1,3 @@
 # Snake
 
-Game of God-knows-what written in Python 3 using pygame library.
+Game of Snake in Python 3 using pygame library.
