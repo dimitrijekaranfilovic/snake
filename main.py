@@ -8,7 +8,6 @@ from Snake import Enemy
 from math import inf, floor, sqrt
 import time
 
-Out = False
 pygame.init()
 background = pygame.display.set_mode((Dimensions.WIDTH, Dimensions.HEIGHT))
 pygame.display.set_caption("Snake")
@@ -17,7 +16,7 @@ clock = pygame.time.Clock()
 
 
 def game_loop():
-    snake = Snake(background, 100, 20)
+    snake = Snake(background, 100, Dimensions.TILE_SIZE)
     fruit = Fruit(background, randint(20, Dimensions.WIDTH - 20), randint(20, Dimensions.HEIGHT - 20))
     x = Dimensions.WIDTH * 0.45
     y = Dimensions.HEIGHT * 0.8
@@ -32,6 +31,11 @@ def game_loop():
     can_left = True
     can_right = True
     score = 0
+    font = pygame.font.Font(None, 30)
+    score_text = font.render('Score: ' + str(score), 2, Colors.YELLOW)
+    box_width = score_text.get_rect()
+    score_x = (Dimensions.WIDTH - box_width[2]) / 2
+    background.blit(score_text, [score_x, 20])
     enemies = []
 
     while not game_exit:
@@ -89,9 +93,11 @@ def game_loop():
 
         background.fill(Colors.BLACK)
         snake = Snake(background, x, y)
+        background.blit(score_text, [score_x, 20])
         if Dimensions.d(snake.head_x, snake.head_y, fruit.x, fruit.y) < 4:
             fruit = Fruit(background, randint(20, Dimensions.WIDTH - 20), randint(20, Dimensions.HEIGHT - 20))
             score += 1
+            score_text = font.render('Score: ' + str(score), 2, Colors.YELLOW)
             if score // 5 > 0 and score % 5 == 0:
                 speed = 1.2 * speed
                 enemies.append(
