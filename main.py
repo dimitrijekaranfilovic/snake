@@ -5,8 +5,6 @@ import time
 from PIL import Image
 
 
-# TODO: add collision detection among enemies
-
 def game_loop():
     pygame.init()
     background = pygame.display.set_mode((Dimensions.WIDTH, Dimensions.HEIGHT))
