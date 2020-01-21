@@ -17,7 +17,7 @@ def game_loop():
 
     enemy = pygame.image.load("./resources/circle1.png")
 
-    im = Image.open("./resources/circle1.png")
+    im = Image.open("./resources/circle1.png")  # image to be displayed as the enemy
     image_width, image_height = im.size
 
     score = 0
