@@ -1,17 +1,25 @@
 import pygame
-from random import randint
-from Entities import Colors, Dimensions, Enemy
+from random import randint, choice
+from Entities import Colors, Dimensions
 import time
+from PIL import Image
 
 
-# TODO: improve enemy movement
+# TODO: add collision detection among enemies as well as enemy-player
 
 def game_loop():
     pygame.init()
     background = pygame.display.set_mode((Dimensions.WIDTH, Dimensions.HEIGHT))
+    tile = pygame.Surface((Dimensions.TILE_SIZE, Dimensions.TILE_SIZE))
+    enemy = pygame.image.load("./resources/circle1.png")
+    im = Image.open("./resources/circle1.png")
+    image_width, image_height = im.size
+    score = 0
+    speed = 2
+    enemy_speed = 1
+
     pygame.display.set_caption("Snake")
     clock = pygame.time.Clock()
-    speed = 2
     fruit = pygame.Surface((Dimensions.TILE_SIZE, Dimensions.TILE_SIZE))
     fruit.fill(Colors.GREEN)
     fruit_x = randint(20, Dimensions.WIDTH - 20)
@@ -21,14 +29,12 @@ def game_loop():
 
     xs = [Dimensions.WIDTH * 0.45]
     ys = [Dimensions.HEIGHT * 0.8]
-    tile = pygame.Surface((Dimensions.TILE_SIZE, Dimensions.TILE_SIZE))
     tile.fill(Colors.WHITE)
 
     can_up = True
     can_down = True
     can_left = True
     can_right = True
-    score = 0
     font = pygame.font.Font(None, 30)
     score_text = font.render('Score: ' + str(score), 2, Colors.YELLOW)
     box_width = score_text.get_rect()
@@ -99,23 +105,10 @@ def game_loop():
             score_text = font.render('Score: ' + str(score), 2, Colors.YELLOW)
             if score // 5 > 0 and score % 5 == 0:
                 speed = 1.2 * speed
-                enemies.append(
-                    Enemy(background, randint(10, Dimensions.WIDTH - 10), randint(10, Dimensions.HEIGHT - 10),
-                          randint(0, 255), randint(0, 255), randint(0, 255)))
-
-        j = 0
-        while j < len(enemies):
-            x_c = randint(-1, 1) * int(speed)
-            y_c = randint(-1, 1) * int(speed)
-            if not (enemies[j].x + x_c < 0 or enemies[j].x + x_c > Dimensions.WIDTH or enemies[j].y + y_c < 0 or
-                    enemies[j].y + y_c > Dimensions.HEIGHT):
-                enemies[j] = Enemy(background, enemies[j].x + x_c, enemies[j].y + y_c, enemies[j].r, enemies[j].g,
-                                   enemies[j].b)
-                for s in range(len(xs)):
-                    for u in range(len(enemies)):
-                        if Dimensions.circle_square_collision(xs[s], ys[s], enemies[u].x, enemies[u].y):
-                            message_display(background, "GAME OVER!", 2, True)
-                j += 1
+                enemies.append([randint(Dimensions.TILE_SIZE, Dimensions.WIDTH - Dimensions.TILE_SIZE),
+                                # appending a list which contains x, y, as well as k's which determine direction of moving
+                                randint(Dimensions.TILE_SIZE, Dimensions.HEIGHT - Dimensions.TILE_SIZE),
+                                choice([-1, 1]), choice([-1, 1])])
         i = len(xs) - 1
         while i >= 1:
             xs[i] = xs[i - 1]
@@ -124,11 +117,27 @@ def game_loop():
         for i in range(0, len(xs)):
             background.blit(tile, (xs[i], ys[i]))
 
+        for i in range(len(enemies)):
+            enemies[i][0] += enemies[i][2] * enemy_speed
+            enemies[i][1] += enemies[i][3] * enemy_speed
+
+            if enemies[i][1] < 0:
+                enemies[i][3] = 1
+            if enemies[i][0] < 0:
+                enemies[i][2] = 1
+            if enemies[i][1] + image_height > Dimensions.HEIGHT:
+                enemies[i][3] = -1
+            if enemies[i][0] + image_width > Dimensions.WIDTH:
+                enemies[i][2] = -1
+
+            pass
         if len(xs) > 43:
             for k in range(len(xs) - 1, 42, -1):
                 if Dimensions.square_square_collision_detection(xs[0], ys[0], xs[k], ys[k]):
                     message_display(background, "GAME OVER!", 2, True)
 
+        for i in range(len(enemies)):
+            background.blit(enemy, (enemies[i][0], enemies[i][1]))
         background.blit(fruit, (fruit_x, fruit_y))
         pygame.display.update()
         clock.tick(75)

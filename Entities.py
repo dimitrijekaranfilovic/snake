@@ -1,4 +1,3 @@
-import pygame
 import math
 
 
@@ -47,13 +46,3 @@ class Colors:
     BLACK = (0, 0, 0)
     WHITE = (255, 255, 255)
     GREEN = (30, 181, 25)
-
-
-class Enemy:
-    def __init__(self, surface, x, y, r, g, b):
-        self.x = x
-        self.y = y
-        self.r = r
-        self.g = g
-        self.b = b
-        pygame.draw.circle(surface, (self.r, self.g, self.b), (self.x, self.y), Dimensions.ENEMY_RADIUS)
