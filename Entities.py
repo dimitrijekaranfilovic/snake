@@ -5,7 +5,6 @@ class Dimensions:
     WIDTH = 500
     HEIGHT = 400
     TILE_SIZE = 10
-    ENEMY_RADIUS = 12
 
     @staticmethod
     def point_distance(x0, y0, x1, y1):
