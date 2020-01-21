@@ -11,7 +11,7 @@ Game of Snake written in Python 3 with the help of pygame library.
 * pygame
 * Pillow (Python Image Library)
 
- You can install them by using pip command:
+ You can install them by using the pip command:
  * pip install pygame
  * pip install Pillow
 
