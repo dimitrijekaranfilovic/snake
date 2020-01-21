@@ -8,33 +8,12 @@ class Dimensions:
     ENEMY_RADIUS = 12
 
     @staticmethod
-    def circle_square_collision(square_x, square_y, circle_x, circle_y):
-        point1 = (square_x, square_y)
-        point2 = (square_x + Dimensions.WIDTH, square_y)
-        point3 = (square_x, square_y + Dimensions.HEIGHT)
-        point4 = (square_x + Dimensions.WIDTH, square_y + Dimensions.HEIGHT)
-
-        if Dimensions.point_distance(circle_x, circle_y, point1[0],
-                                     point1[1]) < Dimensions.ENEMY_RADIUS or Dimensions.point_distance(circle_x,
-                                                                                                       circle_y,
-                                                                                                       point2[0],
-                                                                                                       point2[
-                                                                                                           1]) < Dimensions.ENEMY_RADIUS or Dimensions.point_distance(
-            circle_x, circle_y, point3[0], point3[1]) < Dimensions.ENEMY_RADIUS or Dimensions.point_distance(circle_x,
-                                                                                                             circle_y,
-                                                                                                             point4[0],
-                                                                                                             point4[
-                                                                                                                 1]) < Dimensions.ENEMY_RADIUS:
-            return True
-        return False
-
-    @staticmethod
     def point_distance(x0, y0, x1, y1):
         return math.sqrt((x1 - x0) ** 2 + (y1 - y0) ** 2)
 
     @staticmethod
-    def square_square_collision_detection(x1, y1, x2, y2):
-        if x1 + Dimensions.TILE_SIZE > x2 and x2 + Dimensions.TILE_SIZE > x1 and y1 + Dimensions.TILE_SIZE > y2 and y2 + Dimensions.TILE_SIZE > y1:
+    def square_square_collision_detection(x1, y1, x2, y2, a=TILE_SIZE):
+        if x1 + a > x2 and x2 + a > x1 and y1 + a > y2 and y2 + a > y1:
             return True
         return False
 

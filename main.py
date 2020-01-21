@@ -5,7 +5,7 @@ import time
 from PIL import Image
 
 
-# TODO: add collision detection among enemies as well as enemy-player
+# TODO: add collision detection among enemies
 
 def game_loop():
     pygame.init()
@@ -95,7 +95,7 @@ def game_loop():
 
         background.fill(Colors.BLACK)
         background.blit(score_text, [score_x, 20])
-        if Dimensions.square_square_collision_detection(xs[0], ys[0], fruit_x, fruit_y):
+        if Dimensions.square_square_collision_detection(xs[0], ys[0], fruit_x, fruit_y):  # check if fruit was eaten
             score += 1
             fruit_x = randint(20, Dimensions.WIDTH - 20)
             fruit_y = randint(20, Dimensions.HEIGHT - 20)
@@ -114,13 +114,14 @@ def game_loop():
             xs[i] = xs[i - 1]
             ys[i] = ys[i - 1]
             i -= 1
-        for i in range(0, len(xs)):
+        for i in range(0, len(xs)):  # drawing player
             background.blit(tile, (xs[i], ys[i]))
 
-        for i in range(len(enemies)):
+        for i in range(len(enemies)):  # updating positions of enemies
             enemies[i][0] += enemies[i][2] * enemy_speed
             enemies[i][1] += enemies[i][3] * enemy_speed
 
+            # check if enemy has reached an edge
             if enemies[i][1] < 0:
                 enemies[i][3] = 1
             if enemies[i][0] < 0:
@@ -130,13 +131,17 @@ def game_loop():
             if enemies[i][0] + image_width > Dimensions.WIDTH:
                 enemies[i][2] = -1
 
-            pass
-        if len(xs) > 43:
+        for i in range(len(xs)):  # check if player and any of the enemies have collided
+            for j in range(len(enemies)):
+                if Dimensions.square_square_collision_detection(xs[i], ys[i], enemies[j][0], enemies[j][1]):
+                    message_display(background, "GAME OVER!", 2, True)
+
+        if len(xs) > 43:  # check if player has collided with himself
             for k in range(len(xs) - 1, 42, -1):
                 if Dimensions.square_square_collision_detection(xs[0], ys[0], xs[k], ys[k]):
                     message_display(background, "GAME OVER!", 2, True)
 
-        for i in range(len(enemies)):
+        for i in range(len(enemies)):  # drawing enemies
             background.blit(enemy, (enemies[i][0], enemies[i][1]))
         background.blit(fruit, (fruit_x, fruit_y))
         pygame.display.update()
