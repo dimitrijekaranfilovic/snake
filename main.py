@@ -10,37 +10,51 @@ from PIL import Image
 def game_loop():
     pygame.init()
     background = pygame.display.set_mode((Dimensions.WIDTH, Dimensions.HEIGHT))
+
+    # a surface which represents one part of the snake
     tile = pygame.Surface((Dimensions.TILE_SIZE, Dimensions.TILE_SIZE))
+    tile.fill(Colors.WHITE)
+
     enemy = pygame.image.load("./resources/circle1.png")
+
     im = Image.open("./resources/circle1.png")
     image_width, image_height = im.size
+
     score = 0
-    speed = 2
+
+    speed = 2  # initial player speed
+
     enemy_speed = 1
 
     pygame.display.set_caption("Snake")
     clock = pygame.time.Clock()
+
+    # a piece to be eaten
     fruit = pygame.Surface((Dimensions.TILE_SIZE, Dimensions.TILE_SIZE))
     fruit.fill(Colors.GREEN)
     fruit_x = randint(20, Dimensions.WIDTH - 20)
     fruit_y = randint(20, Dimensions.HEIGHT - 20)
+
     x_change = 0
     y_change = 0
 
+    # initial state of the snake
     xs = [Dimensions.WIDTH * 0.45]
     ys = [Dimensions.HEIGHT * 0.8]
-    tile.fill(Colors.WHITE)
 
     can_up = True
     can_down = True
     can_left = True
     can_right = True
     font = pygame.font.Font(None, 30)
+
+    # scoreboard
     score_text = font.render('Score: ' + str(score), 2, Colors.YELLOW)
     box_width = score_text.get_rect()
     score_x = (Dimensions.WIDTH - box_width[2]) / 2
     background.blit(tile, (xs[0], ys[0]))
     background.blit(score_text, [score_x, 20])
+
     enemies = []
 
     while True:
@@ -84,6 +98,7 @@ def game_loop():
         xs[0] += x_change
         ys[0] += y_change
 
+        # if player goes out of bounds he appears on the opposite end
         if xs[0] < 0:
             xs[0] = Dimensions.WIDTH
         if ys[0] < 0:
