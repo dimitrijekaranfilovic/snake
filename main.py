@@ -1,8 +1,6 @@
 import pygame
 from random import randint
-from Entities import Colors
-from Entities import Dimensions
-from Entities import Enemy
+from Entities import Colors, Dimensions, Enemy
 import time
 
 
