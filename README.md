@@ -2,7 +2,7 @@
 
 Game of Snake written in Python 3 with the help of pygame library.
 
-###Libraries needed
+### Libraries needed
 * pygame
 * Pillow (Python Image Library)
 
