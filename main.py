@@ -6,6 +6,8 @@ from Snake import Enemy
 import time
 
 
+# TODO: improve enemy movement
+
 def game_loop():
     pygame.init()
     background = pygame.display.set_mode((Dimensions.WIDTH, Dimensions.HEIGHT))
@@ -99,10 +101,9 @@ def game_loop():
             score_text = font.render('Score: ' + str(score), 2, Colors.YELLOW)
             if score // 5 > 0 and score % 5 == 0:
                 speed = 1.2 * speed
-                pass
-                # enemies.append(
-                #     Enemy(background, randint(10, Dimensions.WIDTH - 10), randint(10, Dimensions.HEIGHT - 10),
-                #           randint(0, 255), randint(0, 255), randint(0, 255)))
+                enemies.append(
+                    Enemy(background, randint(10, Dimensions.WIDTH - 10), randint(10, Dimensions.HEIGHT - 10),
+                          randint(0, 255), randint(0, 255), randint(0, 255)))
 
         j = 0
         while j < len(enemies):
@@ -112,7 +113,10 @@ def game_loop():
                     enemies[j].y + y_c > Dimensions.HEIGHT):
                 enemies[j] = Enemy(background, enemies[j].x + x_c, enemies[j].y + y_c, enemies[j].r, enemies[j].g,
                                    enemies[j].b)
-                detect_collision(enemies, xs[0], ys[0], background)
+                for s in range(len(xs)):
+                    for u in range(len(enemies)):
+                        if Dimensions.circle_square_collision(xs[s], ys[s], enemies[u].x, enemies[u].y):
+                            message_display(background, "GAME OVER!", 2, True)
                 j += 1
         i = len(xs) - 1
         while i >= 1:
@@ -130,12 +134,6 @@ def game_loop():
         background.blit(fruit, (fruit_x, fruit_y))
         pygame.display.update()
         clock.tick(75)
-
-
-def detect_collision(enemies, current_x, current_y, background):
-    for i in range(len(enemies)):
-        if Dimensions.circle_square_collision(current_x, current_y, enemies[i].x, enemies[i].y):
-            message_display(background, "GAME OVER!", 2, True)
 
 
 def text_objects(text, font):
