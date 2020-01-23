@@ -13,9 +13,9 @@ def game_loop():
     tile = pygame.Surface((Dimensions.TILE_SIZE, Dimensions.TILE_SIZE))
     tile.fill(Colors.WHITE)
 
-    enemy = pygame.image.load("./resources/circle1.png")
+    enemy = pygame.image.load("./resources/circle5.png")
 
-    im = Image.open("./resources/circle1.png")  # image to be displayed as the enemy
+    im = Image.open("./resources/circle5.png")  # image to be displayed as the enemy
     image_width, image_height = im.size
 
     score = 0
