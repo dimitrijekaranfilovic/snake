@@ -30,8 +30,8 @@ def game_loop():
     # a piece to be eaten
     fruit = pygame.Surface((Dimensions.TILE_SIZE, Dimensions.TILE_SIZE))
     fruit.fill(Colors.GREEN)
-    fruit_x = randint(20, Dimensions.WIDTH - 20)
-    fruit_y = randint(20, Dimensions.HEIGHT - 20)
+    fruit_x = randint(Dimensions.TILE_SIZE, Dimensions.WIDTH - Dimensions.TILE_SIZE)
+    fruit_y = randint(Dimensions.TILE_SIZE, Dimensions.HEIGHT - Dimensions.TILE_SIZE)
 
     x_change = 0
     y_change = 0
@@ -110,8 +110,8 @@ def game_loop():
         background.blit(score_text, [score_x, 20])
         if Dimensions.square_square_collision_detection(xs[0], ys[0], fruit_x, fruit_y):  # check if fruit was eaten
             score += 1
-            fruit_x = randint(20, Dimensions.WIDTH - 20)
-            fruit_y = randint(20, Dimensions.HEIGHT - 20)
+            fruit_x = randint(Dimensions.TILE_SIZE, Dimensions.WIDTH - Dimensions.TILE_SIZE)
+            fruit_y = randint(Dimensions.TILE_SIZE, Dimensions.HEIGHT - Dimensions.TILE_SIZE)
             xs.append(700)
             ys.append(700)
 
