@@ -146,7 +146,8 @@ def game_loop():
 
         for i in range(len(xs)):  # check if player and any of the enemies have collided
             for j in range(len(enemies)):
-                if Dimensions.square_square_collision_detection(xs[i], ys[i], enemies[j][0], enemies[j][1]):
+                if Dimensions.square_square_collision_detection(xs[i], ys[i], enemies[j][0], enemies[j][1],
+                                                                Dimensions.TILE_SIZE, image_width):
                     message_display(background, "GAME OVER!", 2, True)
 
         if len(xs) > 43:  # check if player has collided with himself

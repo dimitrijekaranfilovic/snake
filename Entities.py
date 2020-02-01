@@ -11,8 +11,8 @@ class Dimensions:
         return math.sqrt((x1 - x0) ** 2 + (y1 - y0) ** 2)
 
     @staticmethod
-    def square_square_collision_detection(x1, y1, x2, y2, a=TILE_SIZE):
-        if x1 + a > x2 and x2 + a > x1 and y1 + a > y2 and y2 + a > y1:
+    def square_square_collision_detection(x1, y1, x2, y2, a=TILE_SIZE, b=TILE_SIZE):
+        if x1 + a > x2 and x2 + b > x1 and y1 + a > y2 and y2 + b > y1:
             return True
         return False
 
