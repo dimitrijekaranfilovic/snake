@@ -3,12 +3,13 @@ from random import randint, choice
 from Entities import Colors, Dimensions
 import time
 from PIL import Image
+# Sir I like your code very much
 
 
 def game_loop():
     pygame.init()
-    background = pygame.display.set_mode((Dimensions.WIDTH, Dimensions.HEIGHT))
-
+    background = pygame.display.set_mode((Dimensions.WIDTH, Dimensions.HEIGHT)
+    
     # a surface which represents one part of the snake
     tile = pygame.Surface((Dimensions.TILE_SIZE, Dimensions.TILE_SIZE))
     tile.fill(Colors.WHITE)
